@@ -2,23 +2,24 @@
 import sys
 import os
 
-#board layout size
-p = 5
-m = 24
+#board dimensions
+
+#number of rows max
 n = 5
 
-#create the board size
-P_board = [p][n][m]
+#number of columns max (max of number of events)
+m = 24
 
 class Package:
     #Private variables
-    __message = " "
-    __time = 0
+    __message = None
+    __time_Stamp = None
 
     # Setup constructors
-    def __init__(self, message, time_Stamp):
+    def __init__(self, message = " ", time_Stamp = "0"):
         self.__message = message
         self.__time_Stamp = time_Stamp
+
 
     # Set functions
     def set_Message(self, message):
@@ -32,71 +33,35 @@ class Package:
         return str(self.__message)
 
     def get_Time(self):
-        return int(self.__time_Stamp)
+        return str(self.__time_Stamp)
 
-#empty class that 
-#class Process(Package P):
-    
-
-# populate function will help modified matrix values from default
-# hard code
-def populate():
-    #create and define process board
-    for i in range(p):
-        for j in range(2,n):
-            for k in range(m):
-                P_board = [i][j][k] = Package()
-
-    P_board[0][0][0] = Package(a,0)
-    P_board[0][0][0] = Package(a,0)
-    P_board[0][0][0] = Package(a,0)
-    P_board[0][0][0] = Package(a,0)
-    P_board[0][0][0] = Package(a,0)
-    P_board[0][0][0] = Package(a,0)
-    P_board[0][0][0] = Package(a,0)
-    P_board[0][0][0] = Package(a,0)
-    P_board[0][0][0] = Package(a,0)
-    P_board[0][0][0] = Package(a,0)
-    P_board[0][0][0] = Package(a,0)
-    P_board[0][0][0] = Package(a,0)
-    
-
-
-# Sender is a helper function will get payload and send it to
-# designated target
-def sender(Package P):
-    for i in range(p):
-        for j in range(2,n):
-            for k in range(m):
-                if(P[i][j][k] == )
+    def __str__(self):
+        return "From str method: Message: is %s, Time: is %s" % (self.message, self.time_Stamp)
 
 
 
-
-# reciever is a helper function that will help the process the
-# payload for some process
-def recieve(Package P):
-    (message,time_Stamp) = recieve()
-    time = max(time_Stamp, time) + 1
-
-
-# First to be called, this function will help us increment the clock counter in a
-# a process locally before each event and send its payload to reciever.
-def local_Count(Package P):
-    time = time + 1
-    P.time_Stamp = 1
-    sender(P)
+#create the board size
+P_board = [[0 for col in range(m)] for row in range(n)]
+#P_board = [default for col in range(m)]
 
 
 
 def main():
+    for x in range(len(P_board)):
+        print (P_board[x])
 
     #initialize process board
-    populate()
+    #populate()
+
+    test = P_board[0][0];
+    print(test)
+
+    #print(P_board[0][0].__message)
+    #print(P_board[0][0].__time_Stamp)
+
 
     #Create events here
     
-
 
 if __name__ == '__main__':
     main()
