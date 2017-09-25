@@ -7,10 +7,13 @@ p = 5
 m = 24
 n = 5
 
+#create the board size
+P_board = [p][n][m]
+
 class Package:
     #Private variables
-    __message = None
-    __time = None
+    __message = " "
+    __time = 0
 
     # Setup constructors
     def __init__(self, message, time_Stamp):
@@ -42,30 +45,26 @@ def populate():
     for i in range(p):
         for j in range(2,n):
             for k in range(m):
-                P_board = [i][j][k] = 0
+                P_board = [i][j][k] = Package()
 
-    P_board[0][0][0] = a
-    P_board[0][0][1] = b
-    P_board[0][0][2] = s1
-    P_board[0][0][3] = r3
-    P_board[0][0][4] = k
-    P_board[1][0][0] = a
-    P_board[0][0][0] = a
-    P_board[0][0][0] = a
-    P_board[0][0][0] = a
-    P_board[0][0][0] = a
-    P_board[0][0][0] = a
-    P_board[0][0][0] = a
-    P_board[0][0][0] = a
-    P_board[0][0][0] = a
-    P_board[0][0][0] = a
-
-
+    P_board[0][0][0] = Package(a,0)
+    P_board[0][0][0] = Package(a,0)
+    P_board[0][0][0] = Package(a,0)
+    P_board[0][0][0] = Package(a,0)
+    P_board[0][0][0] = Package(a,0)
+    P_board[0][0][0] = Package(a,0)
+    P_board[0][0][0] = Package(a,0)
+    P_board[0][0][0] = Package(a,0)
+    P_board[0][0][0] = Package(a,0)
+    P_board[0][0][0] = Package(a,0)
+    P_board[0][0][0] = Package(a,0)
+    P_board[0][0][0] = Package(a,0)
+    
 
 
 # Sender is a helper function will get payload and send it to
 # designated target
-def sender(Process P):
+def sender(Package P):
     for i in range(p):
         for j in range(2,n):
             for k in range(m):
@@ -76,14 +75,14 @@ def sender(Process P):
 
 # reciever is a helper function that will help the process the
 # payload for some process
-def recieve(Process P):
+def recieve(Package P):
     (message,time_Stamp) = recieve()
     time = max(time_Stamp, time) + 1
 
 
 # First to be called, this function will help us increment the clock counter in a
 # a process locally before each event and send its payload to reciever.
-def loader_One(Process P):
+def local_Count(Package P):
     time = time + 1
     P.time_Stamp = 1
     sender(P)
@@ -96,6 +95,7 @@ def main():
     populate()
 
     #Create events here
+    
 
 
 if __name__ == '__main__':
