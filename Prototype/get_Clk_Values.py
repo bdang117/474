@@ -12,49 +12,52 @@ m = 24
 
 class Package:
     #Private variables
-    __message = None
-    __time_Stamp = None
 
     # Setup constructors
     def __init__(self, message = " ", time_Stamp = "0"):
-        self.__message = message
-        self.__time_Stamp = time_Stamp
+        self.message = message
+        self.time_Stamp = time_Stamp
 
 
     # Set functions
     def set_Message(self, message):
-        self.__message = message
+        self.message = message
 
     def set_Time(self,time_Stamp):
-        self.__time_Stamp = time_Stamp
+        self.time_Stamp = time_Stamp
 
     # Get functions
     def get_Message(self):
-        return str(self.__message)
+        return str(self.message)
 
     def get_Time(self):
-        return str(self.__time_Stamp)
-
-    def __str__(self):
-        return "From str method: Message: is %s, Time: is %s" % (self.message, self.time_Stamp)
+        return str(self.time_Stamp)
 
 
 
 #create the board size
-P_board = [[0 for col in range(m)] for row in range(n)]
-#P_board = [default for col in range(m)]
+P_board1 = [[Package() for col in range(m)] for row in range(n)]
+P_board1[4][23].time_Stamp = "4"
+P_board1[4][23].message = "a"
+
+
 
 
 
 def main():
-    for x in range(len(P_board)):
-        print (P_board[x])
+    for x in range(n):
+        print('\n')
+        for y in range(m):
+            print (P_board1[x][y].time_Stamp)
 
     #initialize process board
     #populate()
 
-    test = P_board[0][0];
-    print(test)
+
+    #test = P_board[0][0].get_Message();
+
+    #test = Package("a", 0)
+    #print(test)
 
     #print(P_board[0][0].__message)
     #print(P_board[0][0].__time_Stamp)
