@@ -6,7 +6,6 @@ For this algorithm, we must calculate the corresponding values given an
 INPUT: A list (array) of string chars of either length 2 or 1 that indicate some event
 (Send, receive, or local calculation)
 OUTPUT: A list of calculated values based off those corresponding events
-
 '''
 
 # modules
@@ -20,9 +19,6 @@ n = 5
 # number of columns max (max of number of events)
 m = 24
 
-# number of processes max
-p = 9
-
 # global dictionary keeping track of send commands
 sARR = {}
 
@@ -31,14 +27,6 @@ time = 0
 
 # send Flag
 sFlag = 1
-
-class isComplete():
-    def __init__(self,isDone = False):
-        self.boolean = isDone
-    def set_Flag(self, check):
-        self.boolean = check
-    def get_Flag(self):
-        return bool(self.boolean)
 
 
 class Package:
@@ -63,8 +51,7 @@ class Package:
         return int(self.time_Stamp)
 
 
-    # function helps process the message and record time_stamp for an
-    # object
+    # function helps process the message
     def monitor(self, time):
 
         # check if the message is a default value
@@ -87,7 +74,7 @@ class Package:
             self.recV()
 
         # Check if the message is NULL
-        elif (self.message == "NULL"):
+        elif (self.message == "NULL" or self.message == "\n" or self.message == " "):
 
             # set the time_Stamp to 0
             self.time_Stamp = 0
@@ -107,30 +94,47 @@ class Package:
     # if so, compare previous object time_Stamp to sARR timestamp and select max
     def recV(self):
         global time
-
         if (self.message == "r1"):
             if ('s1' in sARR):
-                self.time_Stamp = max(self.time_Stamp, sARR['s1'])
+                self.time_Stamp = max(time, sARR['s1'])
                 time = self.time_Stamp
         elif (self.message == "r2"):
             if ('s2' in sARR):
-                self.time_Stamp = max(self.time_Stamp, sARR['s2'])
+                self.time_Stamp = max(time, sARR['s2'])
                 time = self.time_Stamp
         elif (self.message == "r3"):
             if ('s3' in sARR):
-                self.time_Stamp = max(self.time_Stamp, sARR['s3'])
+                self.time_Stamp = max(time, sARR['s3'])
                 time = self.time_Stamp
         elif (self.message == "r4"):
             if ('s4' in sARR):
-                self.time_Stamp = max(self.time_Stamp, sARR['s4'])
+                self.time_Stamp = max(time, sARR['s4'])
                 time = self.time_Stamp
         elif (self.message == "r5"):
             if ('s5' in sARR):
-                self.time_Stamp = max(self.time_Stamp, sARR['s5'])
+                self.time_Stamp = max(time, sARR['s5'])
                 time = self.time_Stamp
+        elif (self.message == "r6"):
+            if ('s6' in sARR):
+                self.time_Stamp = max(time, sARR['s6'])
+                time = self.time_Stamp
+        elif (self.message == "r7"):
+            if ('s7' in sARR):
+                self.time_Stamp = max(time, sARR['s7'])
+                time = self.time_Stamp
+        elif (self.message == "r8"):
+            if ('s8' in sARR):
+                self.time_Stamp = max(time, sARR['s8'])
+                time = self.time_Stamp
+        elif (self.message == "r9"):
+            if ('s9' in sARR):
+                self.time_Stamp = max(time, sARR['r9'])
+                time = self.time_Stamp
+
         else:
             print("recieve function does not exist")
 
+    # sender function
     def sendV(self):
         global sARR
         global sFlag
@@ -145,9 +149,6 @@ class Package:
 # create the board size
 P_board1 = [[Package() for col in range(m)] for row in range(n)]
 
-# *TEST* fixed values for P_board1
-
-
 
 def main():
     global sARR
@@ -156,23 +157,21 @@ def main():
     global boolean_ARR
 
     # get range input from user
-
     n = int(input("Enter a number of rows: "))
     m = int(input("Enter a number of columns: "))
 
     # get individual message input from user
-
     for x in range(n):
         for y in range(m):
                 P_board1[x][y].message = input("Enter an event Value: ")
 
-    # printing messages
-
+    # printing the Process Board
     print('\n')
     for x in range(n):
         print('\n')
         for y in range(m):
             print(P_board1[x][y].message, end=" ")
+
 
     # goes through the array of packages and updates by calling local time
     # continues to do so if any send functions are read (sFlag)
@@ -187,20 +186,19 @@ def main():
                     if (P_board1[i][j].message == "0"):
                         break
                     else:
-                        e.monitor(time);
+                        e.monitor(time)
                         time += 1
                         P_board1[i][j].set_Time(e.get_Time())
                         print(P_board1[i][j].time_Stamp, end= ' ')
 
-    # outputting time values of messages
-
         print('\n')
+
+    # outputting time values of messages
     for x in range(n):
         print('\n')
         for y in range(m):
             print(P_board1[x][y].get_Time(), end=" ")
 
-    #print(sARR)
 
 
 if __name__ == '__main__':
