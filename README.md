@@ -1,7 +1,3 @@
- if (P_board1[z][x][y].message == "0"):
-                    print(P_board1[z][x][y].message, end=" ")
-                else:# Lamport's Logical Clock
-
 ## Introduction
 ___
 For this project, we are tasked to designed two algorithms related to Lamport’s logical clock. One is to calculate the logical clock values for the events at each of the N processes. The second algorithm will then detect whether an execution is correct given the logical clock values for events at all processes. For simplification,we assume that the network is fully connected so there are no intermediate nodes for any transmission. Efficiency of the algorithms is not a big concern for this project. However, our goal is to terminate within 60 minutes if N=3 and M=4 for each run of the program.
