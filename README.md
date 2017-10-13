@@ -1,4 +1,6 @@
-# Lamport's Logical Clock
+ if (P_board1[z][x][y].message == "0"):
+                    print(P_board1[z][x][y].message, end=" ")
+                else:# Lamport's Logical Clock
 
 ## Introduction
 ___

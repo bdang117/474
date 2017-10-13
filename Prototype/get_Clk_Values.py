@@ -1,22 +1,50 @@
-#modules
+'''
+CS-474 Project 1: Lamports Logical Clock
+Names: Billy Dang, Sean Mckean, Hassan Hamod
+
+For this algorithm, we must calculate the corresponding values given an
+INPUT: A list (array) of string chars of either length 2 or 1 that indicate some event
+(Send, receive, or local calculation)
+OUTPUT: A list of calculated values based off those corresponding events
+
+'''
+
+# modules
 import sys
 import os
 
-#board dimensions
-
-#number of rows max
+# board dimensions
+# number of rows max
 n = 5
 
-#number of columns max (max of number of events)
+# number of columns max (max of number of events)
 m = 24
 
-sARR = []
+# number of processes max
+p = 9
+
+# global dictionary keeping track of send commands
+sARR = {}
+
+# global time variable
+time = 0
+
+# send Flag
+sFlag = 1
+
+class isComplete():
+    def __init__(self,isDone = False):
+        self.boolean = isDone
+    def set_Flag(self, check):
+        self.boolean = check
+    def get_Flag(self):
+        return bool(self.boolean)
+
 
 class Package:
-    #Private variables
 
     # Setup constructors
-    def __init__(self, message = "0", time_Stamp = 0):
+    def __init__(self, message="0", time_Stamp=0):
         self.message = message
         self.time_Stamp = time_Stamp
 
@@ -24,7 +52,7 @@ class Package:
     def set_Message(self, message):
         self.message = message
 
-    def set_Time(self,time_Stamp):
+    def set_Time(self, time_Stamp):
         self.time_Stamp = time_Stamp
 
     # Get functions
@@ -34,67 +62,146 @@ class Package:
     def get_Time(self):
         return int(self.time_Stamp)
 
-    # functions that perform local calculations
 
+    # function helps process the message and record time_stamp for an
+    # object
+    def monitor(self, time):
 
-    def local_Count(self,time):
+        # check if the message is a default value
         if self.message == "0":
             return
+
+        # check if messages first character string is "s"
         elif (self.message[0] == "s"):
-            temp = int(self.message[1])
-            print(temp)
-            #self.sendV(temp, self.time_Stamp)
-        else:
+
+            # record the local time
             self.time_Stamp = time
-            # P.time_Stamp = time
+
+            # initiate send
+            self.sendV()
+
+        # # check if messages first character string is "r"
+        elif (self.message[0] == "r"):
+
+            # initiate receive
+            self.recV()
+
+        # Check if the message is NULL
+        elif (self.message == "NULL"):
+
+            # set the time_Stamp to 0
+            self.time_Stamp = 0
+
+        # Otherwise perform local calculation
+        else:
+
+            # record time stamp
+            self.time_Stamp = time
+
+            # return the time_Stamp value
             return self.time_Stamp
-        # sender(P)
 
-    def sendV(self, number, time):
+
+
+    # check if corresponding send function is in sARR
+    # if so, compare previous object time_Stamp to sARR timestamp and select max
+    def recV(self):
+        global time
+
+        if (self.message == "r1"):
+            if ('s1' in sARR):
+                self.time_Stamp = max(self.time_Stamp, sARR['s1'])
+                time = self.time_Stamp
+        elif (self.message == "r2"):
+            if ('s2' in sARR):
+                self.time_Stamp = max(self.time_Stamp, sARR['s2'])
+                time = self.time_Stamp
+        elif (self.message == "r3"):
+            if ('s3' in sARR):
+                self.time_Stamp = max(self.time_Stamp, sARR['s3'])
+                time = self.time_Stamp
+        elif (self.message == "r4"):
+            if ('s4' in sARR):
+                self.time_Stamp = max(self.time_Stamp, sARR['s4'])
+                time = self.time_Stamp
+        elif (self.message == "r5"):
+            if ('s5' in sARR):
+                self.time_Stamp = max(self.time_Stamp, sARR['s5'])
+                time = self.time_Stamp
+        else:
+            print("recieve function does not exist")
+
+    def sendV(self):
         global sARR
-        sARR[number] = time
+        global sFlag
 
-#create the board size
+        if (self.message in sARR and self.time_Stamp < sARR[self.message]):
+            return
+        else:
+            sFlag += 1
+            sARR[self.message] = self.time_Stamp + 1
+
+
+# create the board size
 P_board1 = [[Package() for col in range(m)] for row in range(n)]
 
-#fixed values for P_board1
-P_board1[0][0].set_Message("a")
-P_board1[0][1].set_Message("s1")
-P_board1[0][2].set_Message("r3")
-P_board1[0][3].set_Message("b")
-P_board1[1][0].set_Message("c")
-P_board1[1][1].set_Message("r2")
-P_board1[1][2].set_Message("s3")
-P_board1[2][0].set_Message("r1")
-P_board1[2][1].set_Message("d")
-P_board1[2][2].set_Message("s2")
-P_board1[2][3].set_Message("e")
+# *TEST* fixed values for P_board1
 
 
 
 def main():
+    global sARR
+    global time
+    global sFlag
+    global boolean_ARR
 
-    #see if we have default Package objects
+    # get range input from user
+
+    n = int(input("Enter a number of rows: "))
+    m = int(input("Enter a number of columns: "))
+
+    # get individual message input from user
+
+    for x in range(n):
+        for y in range(m):
+                P_board1[x][y].message = input("Enter an event Value: ")
+
+    # printing messages
+
+    print('\n')
     for x in range(n):
         print('\n')
         for y in range(m):
-            print(P_board1[x][y].message, end = " ")
+            print(P_board1[x][y].message, end=" ")
 
-    #test to see if time is changed
-    for i in range(n):
-        time = 1
-        for j in range(m):
-            #P_board1[i][j].time_Stamp = local_Count(time)
-            e = P_board1[i][j]
-            if(P_board1[i][j].message == "0"):
-                break
-            else:
-                e.local_Count(time);
-                time += 1
-                temp_val = e.get_Time()
-                P_board1[i][j].set_Time(e.get_Time())
+    # goes through the array of packages and updates by calling local time
+    # continues to do so if any send functions are read (sFlag)
+    while (sFlag > 0):
+        sFlag = 0
 
-    print('\n', P_board1[2][3].get_Time())
+        for i in range(n):
+            time = 1
+            print('\n')
+            for j in range(m):
+                    e = P_board1[i][j]
+                    if (P_board1[i][j].message == "0"):
+                        break
+                    else:
+                        e.monitor(time);
+                        time += 1
+                        P_board1[i][j].set_Time(e.get_Time())
+                        print(P_board1[i][j].time_Stamp, end= ' ')
+
+    # outputting time values of messages
+
+        print('\n')
+    for x in range(n):
+        print('\n')
+        for y in range(m):
+            print(P_board1[x][y].get_Time(), end=" ")
+
+    #print(sARR)
+
 
 if __name__ == '__main__':
     main()
