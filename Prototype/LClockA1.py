@@ -142,8 +142,6 @@ class Package:
 
 
 
-
-
 def main():
     global sARR
     global time
@@ -166,7 +164,6 @@ def main():
 
     print("\n================Initial Process Board===============")
     # printing the Process Board
-    print('\n')
     for x in range(n):
         print('\n')
         for y in range(m):
