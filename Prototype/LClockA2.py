@@ -33,9 +33,7 @@ class Package:
         return int(self.time_Stamp)
 
 
-    # need a function to process the values
-    def mainParse(self, m, n):
-        #check the board for events
+
 
 
 
@@ -83,7 +81,7 @@ def main():
 
 
     # printing the Process Board
-    print('\n')
+    print('------------------Initial Board--------------------')
     for x in range(n):
         print('\n')
         for y in range(m):
@@ -92,20 +90,29 @@ def main():
     for i in range(n):
         print('\n')
         for j in range(m):
+
+            # get the previous and current value for comparison
+            curr_Value = P_board1[i][j].time_Stamp;
+            next_Value = P_board1[i][j+1].time_Stamp;
+
             if P_board1[i][j].time_Stamp == 0:
                P_board1[i][j].set_Message("NULL")
 
             elif P_board1[i][j].time_Stamp == 1:
                P_board1[i][j].set_Message('a')
+
+            elif next_Value == curr_Value + 1:
+                P_board1[i][j].set_Message('r')
+
             else:
-               #call the function
-               P_board1[i][j].mainParse(m,n)
+                pass
 
 
 
-        print('\n')
 
-    # outputting time values of messages
+
+    print('------------------Aftrer Run--------------------')
+    # outputting messages
     for x in range(n):
         print('\n')
         for y in range(m):
