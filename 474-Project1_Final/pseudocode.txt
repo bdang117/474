@@ -7,4 +7,15 @@ NOTE: Remember to convert to PDF for submission
 
 Pseudocode
 
+algorithm 1:
 
+User inputs number of rows (n) and number of events/columns (m)
+
+Check if the user input satifies the conditions
+where n is greater than 1 and less than or equal to 5
+
+if so, create P_board otherwise try again
+
+for x = 0 to n
+  for y = 0 to m
+    get users to input event values

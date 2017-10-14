@@ -91,21 +91,24 @@ def main():
         print('\n')
         for j in range(m):
 
-            # get the previous and current value for comparison
-            curr_Value = P_board1[i][j].time_Stamp;
-            next_Value = P_board1[i][j+1].time_Stamp;
-
             if P_board1[i][j].time_Stamp == 0:
                P_board1[i][j].set_Message("NULL")
 
             elif P_board1[i][j].time_Stamp == 1:
                P_board1[i][j].set_Message('a')
 
-            elif next_Value == curr_Value + 1:
-                P_board1[i][j].set_Message('r')
-
             else:
                 pass
+
+    for i in range(n):
+        for j in range(0,m-1):
+             # get the previous and current value for comparison
+            curr_Value = P_board1[i][j].time_Stamp;
+            next_Value = P_board1[i][j+1].time_Stamp;
+
+            if next_Value == curr_Value + 1:
+                P_board1[i][j].set_Message('r')
+
 
 
 

@@ -1,0 +1,39 @@
+Enter a number of rows: 3
+Enter a number of columns: 4
+Enter an event Value: 1
+Enter an event Value: 2
+Enter an event Value: 8
+Enter an event Value: 9
+Enter an event Value: 1
+Enter an event Value: 6
+Enter an event Value: 7
+Enter an event Value: 0
+Enter an event Value: 3
+Enter an event Value: 4
+Enter an event Value: 5
+Enter an event Value: 6
+
+================Initial Process Board===============
+
+
+1 2 8 9
+
+1 6 7 0
+
+3 4 5 6
+===============The Work Begins====================
+
+
+1 2 3 4
+
+1 2 3
+
+1 2 3 4
+
+
+
+1 2 3 4
+
+1 2 3 0
+
+1 2 3 4 
