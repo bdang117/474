@@ -1,3 +1,4 @@
+
 '''
 CS-474 Project 1: Lamports Logical Clock
 Names: Billy Dang, Sean Mckean, Hassan Hamod
@@ -12,12 +13,6 @@ OUTPUT: A list of calculated values based off those corresponding events
 import sys
 import os
 
-# board dimensions
-# number of rows max
-n = 5
-
-# number of columns max (max of number of events)
-m = 24
 
 # global dictionary keeping track of send commands
 sARR = {}
@@ -146,8 +141,7 @@ class Package:
             sARR[self.message] = self.time_Stamp + 1
 
 
-# create the board size
-P_board1 = [[Package() for col in range(m)] for row in range(n)]
+
 
 
 def main():
@@ -159,11 +153,18 @@ def main():
     n = int(input("Enter a number of rows: "))
     m = int(input("Enter a number of columns: "))
 
+    if ((n > 1 and n <= 5) and (m <= 24 and m >= 1)):
+        # create the board size
+        P_board1 = [[Package() for col in range(m)] for row in range(n)]
+    else:
+        print('Your dimensions do not meet our requirements!')
+
     # get individual message input from user
     for x in range(n):
         for y in range(m):
                 P_board1[x][y].message = input("Enter an event Value: ")
 
+    print("\n================Initial Process Board===============")
     # printing the Process Board
     print('\n')
     for x in range(n):
@@ -172,6 +173,8 @@ def main():
             print(P_board1[x][y].message, end=" ")
 
 
+
+    print("\n===============The Work Begins====================")
     # goes through the array of packages and updates by calling local time
     # continues to do so if any send functions are read (sFlag)
     while (sFlag > 0):
