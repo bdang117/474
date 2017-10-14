@@ -52,7 +52,7 @@ class Package:
 
 
     # function helps process the message
-    def monitor(self, time):
+    def mainParse(self, time):
 
         # check if the message is a default value
         if self.message == "0":
@@ -154,7 +154,6 @@ def main():
     global sARR
     global time
     global sFlag
-    global boolean_ARR
 
     # get range input from user
     n = int(input("Enter a number of rows: "))
@@ -182,13 +181,13 @@ def main():
             time = 1
             print('\n')
             for j in range(m):
-                    e = P_board1[i][j]
+                    temp = P_board1[i][j]
                     if (P_board1[i][j].message == "0"):
                         break
                     else:
-                        e.monitor(time)
+                        temp.mainParse(time)
                         time += 1
-                        P_board1[i][j].set_Time(e.get_Time())
+                        P_board1[i][j].set_Time(temp.get_Time())
                         print(P_board1[i][j].time_Stamp, end= ' ')
 
         print('\n')
