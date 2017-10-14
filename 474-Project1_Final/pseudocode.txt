@@ -52,6 +52,7 @@ time = 1     // time is our int value which gets reset to 1 every process row
        if (<TIMEVALUE FOR CORRESPONDING SEND EXISTS>)
          Pboard[i][j].timevalue = <THE MAX VALUE OF CORRESPONDING SEND OR CURRENT TIMEVALUE>
          time = Pboard[i][j].timevalue // this updates the current process row to the current time clock after the recieve function
+         time += 1
        else
          Pboard[i][j].timevalue = 0  // if there is no corresponding send event for the recieve, assign it a 0;
      }   
