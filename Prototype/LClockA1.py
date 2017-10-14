@@ -151,7 +151,7 @@ def main():
     n = int(input("Enter a number of rows: "))
     m = int(input("Enter a number of columns: "))
 
-    if ((n > 1 and n <= 5) and (m <= 24 and m >= 1)):
+    if ((n > 1 and n <= 5) and (m <= 24 and m > 1)):
         # create the board size
         P_board1 = [[Package() for col in range(m)] for row in range(n)]
     else:
