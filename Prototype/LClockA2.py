@@ -17,7 +17,7 @@ import operator
 
 class Package:
     # Setup constructors
-    def __init__(self, message='xx', time_Stamp=9999):
+    def __init__(self, message= 'xx', time_Stamp = 9999):
         self.message = message
         self.time_Stamp = time_Stamp
 
@@ -36,33 +36,38 @@ class Package:
         return int(self.time_Stamp)
 
 
+
+
 # ------------------------Start of main--------------------------------------
 def main():
+
     # get range input from user
     n = int(input("Enter a number of rows: "))
     m = int(input("Enter a number of columns: "))
-
-    tempArr = []
 
     if ((n > 1 and n <= 5) and (m <= 24 and m > 1)):
         # create the board size
         P_board1 = [[Package() for col in range(m)] for row in range(n)]
     else:
         print('Your dimensions do not meet our requirements!')
+        sys.exit(1)
 
-    # get individual message input from user
+
+    tempArr = []
+
     for x in range(n):
         for y in range(m):
-            tempe = int(input("Enter an event integer value: "))
-            tempArr.append(tempe)
-            P_board1[x][y].time_stamp = tempe
+            temp = int(input("Enter an event integer value: "))
+            tempArr.append(temp)
+            P_board1[x][y].set_Time(temp)
 
-
+    #check to make entries are valid
     sortedList = sorted(tempArr)
     for x in range(len(sortedList)):
         if (sortedList[x] - sortedList[x - 1] > 1):
             print('INCORRECT')
-            sys.exit
+            sys.exit(1)
+
 
     # printing the Process Board
     print('------------------Initial Board--------------------')
@@ -79,13 +84,13 @@ def main():
             elif P_board1[i][j].time_Stamp == 1:
                 P_board1[i][j].set_Message(random.choice(string.ascii_lowercase[:16]))
 
-            elif P_board1[i][j].time_Stamp - P_board1[i][j - 1].time_Stamp > 1 and j != 0 or j == 0 and P_board1[i][
-                j].time_Stamp > 1:
+            elif P_board1[i][j].time_Stamp - P_board1[i][j - 1].time_Stamp > 1 and j != 0 or j == 0 and P_board1[i][j].time_Stamp > 1:
                 P_board1[i][j].set_Message('r')
                 for k in range(n):
                     for l in range(m):
-                        if (P_board1[i][j].time_Stamp - 1 == P_board1[k][l].time_Stamp):
+                        if(P_board1[i][j].time_Stamp - 1 == P_board1[k][l].time_Stamp):
                             P_board1[k][l].set_Message('s')
+
 
     # for the last remaining local calculations
     for i in range(n):
@@ -94,46 +99,58 @@ def main():
                 P_board1[i][j].set_Message(random.choice(string.ascii_lowercase[:16]))
 
     # now lets assign event values based on what was entered
-    list_Values = {}
-    counter = 1
+    list_Values = []
 
     # get the send values
     for i in range(n):
-        for j in range(m):
-            if P_board1[i][j].message == 's':
+       for j in range(m):
+           if P_board1[i][j].message == 's':
                 # grab time from object
                 temp = P_board1[i][j].get_Time()
-                # store the values into an array
-                list_Values.setdefault(str(temp), counter)
-                counter += 1
+                if temp not in list_Values:
+                    # store the values into an array
+                    list_Values.append(temp)
 
     # sort the send values
-    list_Values = sorted(list_Values.items(), key=operator.itemgetter(0))
+    list_Values.sort()
 
-    '''for i in range(len(list_Values)):
-        list_Values[i] = counter
-        counter += 1'''
-
-    # get length of list
-    x = len(list_Values)
-
+    counter = 1
+    k = 0
     # now lets label the send events with numbers
     for i in range(n):
         for j in range(m):
-            for k in range(x):
-                if P_board1[i][j].time_Stamp == list_Values[k]:
-                    temp2 = P_board1[i][j].get_Message()
-                    temp2 += str(list_Values[k])
-                    P_board1[i][j].set_Message(temp2)
+            if P_board1[i][j].time_Stamp == list_Values[k]:
+                temp2 = P_board1[i][j].get_Message()
+                temp2 += str(counter)
+                P_board1[i][j].set_Message(temp2)
+                counter += 1
+                k += 1
+
+    #go back and check to see if any sends were skipped
+    for i in range(n):
+        for j in range(m):
+            if P_board1[i][j].message == 's' and P_board1[i][j].time_Stamp == list_Values[k]:
+                temp2 = P_board1[i][j].get_Message()
+                temp2 += str(counter)
+                P_board1[i][j].set_Message(temp2)
+                counter += 1
+                k += 1
+            elif P_board1[i][j].message == 's':
+                P_board1[i][j].set_Message(random.choice(string.ascii_lowercase[:16]))
+
 
     # now lets get the r's
     for i in range(n):
         for j in range(m):
-            if P_board1[i][j].message == "r":
+             if P_board1[i][j].message == "r":
                 for k in range(n):
                     for l in range(m):
-                        if (P_board1[i][j].time_Stamp - 1 == P_board1[k][l].time_Stamp):
+                        if(P_board1[i][j].time_Stamp - 1 == P_board1[k][l].time_Stamp and len(P_board1[k][l].message) > 1):
                             P_board1[i][j].set_Message('r' + P_board1[k][l].get_Message()[1:])
+
+
+
+
 
     print('\n------------------After Run--------------------')
     # outputting messages
@@ -142,5 +159,9 @@ def main():
         for y in range(m):
             print(P_board1[x][y].get_Message(), end=" ")
 
-    if __name__ == '__main__':
-        main()
+
+if __name__ == '__main__':
+    main()
+
+
+
