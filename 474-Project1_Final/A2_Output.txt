@@ -1,0 +1,91 @@
+
+RUN 1:
+
+Enter a number of rows: 3
+Enter a number of columns: 4
+Enter an event integer value: 1
+Enter an event integer value: 2
+Enter an event integer value: 8
+Enter an event integer value: 9
+Enter an event integer value: 1
+Enter an event integer value: 6
+Enter an event integer value: 7
+Enter an event integer value: 0
+Enter an event integer value: 3
+Enter an event integer value: 4
+Enter an event integer value: 5
+Enter an event integer value: 6
+------------------Initial Board--------------------
+
+
+1 2 8 9 
+
+1 6 7 0 
+
+3 4 5 6 
+------------------After Run--------------------
+
+
+l s1 r3 b 
+
+i r2 s3 NULL 
+
+r1 i s2 e 
+
+
+
+
+
+RUN 2:
+
+Enter a number of rows: 3
+Enter a number of columns: 4
+Enter an event integer value: 1
+Enter an event integer value: 2
+Enter an event integer value: 8
+Enter an event integer value: 9
+Enter an event integer value: 1
+Enter an event integer value: 6
+Enter an event integer value: 7
+Enter an event integer value: 0
+Enter an event integer value: 2
+Enter an event integer value: 3
+Enter an event integer value: 4
+Enter an event integer value: 5
+------------------Initial Board--------------------
+
+
+1 2 8 9 
+
+1 6 7 0 
+
+2 3 4 5 
+------------------After Run--------------------
+
+
+s1 k r3 n 
+
+o r2 s3 NULL 
+
+r1 k g s2 
+
+
+
+RUN 3:
+
+
+Enter a number of rows: 3
+Enter a number of columns: 4
+Enter an event integer value: 1
+Enter an event integer value: 2
+Enter an event integer value: 8
+Enter an event integer value: 9
+Enter an event integer value: 1
+Enter an event integer value: 6
+Enter an event integer value: 7
+Enter an event integer value: 0
+Enter an event integer value: 2
+Enter an event integer value: 4
+Enter an event integer value: 5
+Enter an event integer value: 6
+INCORRECT
